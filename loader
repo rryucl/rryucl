@@ -123,7 +123,7 @@ local Button = Tab:CreateButton({
    Info = "Button info/Description.",
 
    Callback = function()
-       setclipboard("https://ads.luarmor.net/getkey?for=12Hour_Key-ILqdtKYapxxt")
+       setclipboard("https://ads.luarmor.net/get_key?for=12_Hour_Key-ILqdtKYapxxt")
        notify("Link Copied To Clipboard")
    end,
 })
@@ -133,7 +133,7 @@ local Button = Tab:CreateButton({
    Interact = '',
    Info = "Button info/Description.",
    Callback = function()
-       setclipboard("https://ads.luarmor.net/getkey?for=12Hour_Key-YwTAbrvEzYeJ")
+       setclipboard("https://ads.luarmor.net/get_key?for=12_Hour_Key-YwTAbrvEzYeJ")
        notify("Link Copied To Clipboard")
    end,
 })
