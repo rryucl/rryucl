@@ -1,0 +1,149 @@
+repeat
+	task.wait()
+until game:IsLoaded()
+
+local Hub = "rryucl Hub"
+local Hub_Script_ID = "0c85afa1bdc58017b173dac881059607"
+local Discord_Invite = "nCJQJsasVu"
+local UI_Theme = "Dark"
+
+local PlaceIDs = {
+	[109983668079237] = "0c85afa1bdc58017b173dac881059607",
+}
+
+makefolder(Hub)
+local key_path = Hub .. "/Key.txt"
+script_key = script_key or isfile(key_path) and readfile(key_path) or nil
+local UI = loadstring(game:HttpGet("https://raw.githubusercontent.com/rryucl/rryucl/refs/heads/main/rfield"))()
+local API = loadstring(game:HttpGet("https://sdkAPI-public.luarmor.net/library.lua"))()
+local Cloneref = cloneref or function(instance)
+	return instance
+end
+local Players = Cloneref(game:GetService("Players"))
+local HttpService = Cloneref(game:GetService("HttpService"))
+local AssetService = Cloneref(game:GetService("AssetService"))
+local Request = http_request or request or syn.request or http
+local PagedResult = AssetService:GetGamePlacesAsync()
+local Pages = PagedResult:GetCurrentPage()
+
+local EnteredKey
+
+while true do
+    for _, place in pairs(Pages) do
+        for key, value in pairs(place) do
+            if typeof(value) == "number" then
+                print(value)
+                if PlaceIDs[value] then
+                    API.script_id = PlaceIDs[value]
+                    break
+                else
+                    API.script_id = Hub_Script_ID
+                end
+            end
+        end
+    end
+
+    if PagedResult.IsFinished then
+        break
+    end
+
+    Pages = PagedResult:AdvanceToNextPageAsync()
+end
+
+local function notify(title, content, duration)
+	UI:Notify({ Title = title, Content = content, Duration = duration or 8 })
+end
+
+local function checkKey(input_key)
+	local status = API.check_key(input_key or script_key)
+	if status.code == "KEY_VALID" then
+		script_key = input_key or script_key
+		writefile(key_path, script_key)
+		UI:Destroy()
+		API.load_script()
+	elseif status.code:find("KEY_") then
+		local messages = {
+			KEY_HWID_LOCKED = "Key linked to a different HWID. Please reset it using our bot",
+			KEY_INCORRECT = "Key is incorrect",
+			KEY_INVALID = "Key is invalid",
+		}
+		notify("Key Check Failed", messages[status.code] or "Unknown error")
+	else
+		Players.LocalPlayer:Kick("Key check failed: " .. status.message .. " Code: " .. status.code)
+	end
+end
+
+if script_key then
+	checkKey()
+end
+
+local Window = UI:CreateWindow({
+    Name = 'Loader',
+    LoadingTitle = 'Loading',
+    LoadingSubtitle = 'by rryucl',
+    ConfigurationSaving = {
+        Enabled = false,
+        FolderName = "rryucl",
+        FileName = 'Config',
+    },
+    Discord = {
+    Enabled = true,
+    Invite = "nCJQJsasVu",
+    RememberJoins = true
+   },
+})
+
+local Tab = Window:CreateTab('Main', 4483362458)
+
+local Input = Tab:CreateInput({
+   Name = "Enter Key:",
+   Info = "Input info/Description.",
+   PlaceholderText = script_key or "Example: agKhRikQP..",
+   RemoveTextAfterFocusLost = false,
+   Callback = function(Text)
+      EnteredKey = Text
+      print(Text)
+   end,
+})
+
+local Button = Tab:CreateButton({
+   Name = "Check Key",
+   Info = "Button info/Description.",
+   Interact = '',
+   Callback = function()
+       checkKey(EnteredKey)
+   end,
+})
+
+local Section1 = Tab:CreateSection('-------------------------------------------------------------------------------------------------------------------', true)
+
+local Button = Tab:CreateButton({
+   Name = "Get Free Key (Linkvertise)",
+   Interact = '',
+   Info = "Button info/Description.",
+
+   Callback = function()
+       setclipboard("https://ads.luarmor.net/getkey?for=12Hour_Key-ILqdtKYapxxt")
+       notify("Link Copied To Clipboard")
+   end,
+})
+
+local Button = Tab:CreateButton({
+   Name = "Get Free Key (Lootlabs)",
+   Interact = '',
+   Info = "Button info/Description.",
+   Callback = function()
+       setclipboard("https://ads.luarmor.net/getkey?for=12Hour_Key-YwTAbrvEzYeJ")
+       notify("Link Copied To Clipboard")
+   end,
+})
+
+local Button = Tab:CreateButton({
+   Name = "Join Discord",
+   Interact = '',
+   Info = "Button info/Description.",
+   Callback = function()
+       setclipboard("discord.gg/nCJQJsasVu")
+       notify("Link Copied To Clipboard")
+   end,
+})
