@@ -89,7 +89,7 @@ local Window = UI:CreateWindow({
     Discord = {
     Enabled = true,
     Invite = "nCJQJsasVu",
-    RememberJoins = true
+    RememberJoins = false
    },
 })
 
