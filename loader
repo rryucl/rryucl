@@ -118,7 +118,7 @@ local Button = Tab:CreateButton({
 local Section1 = Tab:CreateSection('-------------------------------------------------------------------------------------------------------------------', true)
 
 local Button = Tab:CreateButton({
-   Name = "Get Free Key (Linkvertise)",
+   Name = "Get Free Key (Method 1)",
    Interact = '',
    Info = "Button info/Description.",
 
@@ -129,7 +129,7 @@ local Button = Tab:CreateButton({
 })
 
 local Button = Tab:CreateButton({
-   Name = "Get Free Key (Lootlabs)",
+   Name = "Get Free Key (Method 2)",
    Interact = '',
    Info = "Button info/Description.",
    Callback = function()
